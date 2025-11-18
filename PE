@@ -1,0 +1,161 @@
+Pulmonary Embolism Segmentation using TransUNet on FUMPE Dataset
+
+This repository contains the implementation of a Transformer-based TransUNet model applied to the FUMPE Dataset (Kaggle) for Pulmonary Embolism (PE) segmentation from CT scan slices.
+The project focuses on preprocessing, training with Dice loss, and achieving robust segmentation performance.
+
+🚀 Project Overview
+
+Pulmonary Embolism (PE) is a critical and potentially fatal condition requiring timely diagnosis.
+This project utilizes TransUNet, a hybrid CNN + Transformer architecture, to segment embolism regions from CT images.
+
+Timeline: Mar–Apr 2025, Aug 2025
+
+Model: TransUNet
+
+Dataset: FUMPE (Fully Unsupervised Method for Pulmonary Embolism) – Kaggle
+
+Task: Semantic segmentation of pulmonary embolism regions
+
+Loss Function: Dice Loss
+
+Best Result: Dice Coefficient ≈ 0.852 at 50 epochs
+
+📂 Dataset Structure
+
+Download the dataset from Kaggle and place it as:
+
+dataset/
+ ├── train/
+ │   ├── images/
+ │   └── masks/
+ ├── val/
+ │   ├── images/
+ │   └── masks/
+ └── test/
+     ├── images/
+     └── masks/
+
+
+Each folder contains CT slices (.dcm) and corresponding PE masks(.mat).
+
+🛠️ Technologies Used
+
+Python
+
+TensorFlow / Keras
+
+NumPy
+
+Matplotlib
+
+OpenCV (optional preprocessing)
+
+TransUNet architecture
+
+📦 Installation
+
+Clone the repository:
+
+git clone https://github.com/AbhsheKTiwari/Pulmonary-Embolism-Segmentation-using-TransUNet-on-FUMPE-Dataset.git
+cd Pulmonary-Embolism-Segmentation-using-TransUNet-on-FUMPE-Dataset
+
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+🧹 Preprocessing
+
+The following steps were applied:
+
+CT slice normalization
+
+CLAHE (optional)
+
+Resizing to 256×256
+
+Mask alignment
+
+Data augmentation (rotation, flips)
+
+Example preprocessing snippet:
+
+img = cv2.resize(img, (256, 256))
+mask = cv2.resize(mask, (256, 256))
+img = img / 255.0
+
+🧠 Model Architecture: TransUNet
+
+TransUNet combines:
+
+CNN Encoder (ResNet / UNet-encoder)
+
+Transformer Block
+
+UNet-style Decoder
+
+This hybrid structure helps capture global context from PE lesions while preserving spatial details.
+
+Architecture summary:
+
+model = TransUNet(img_dim=256, channels=1, num_classes=1)
+model.compile(optimizer='adam', loss=dice_loss, metrics=[dice_coef])
+
+🎯 Training
+
+Training settings:
+
+Epochs: 50
+
+Batch Size: 8
+
+Optimizer: Adam
+
+Loss: Dice Loss
+
+Metrics: Dice Coefficient
+
+Run training:
+
+python train.py
+
+📈 Results
+
+Dice Coefficient: ≈ 0.852 at 50 epochs
+
+Training Stability: Smooth convergence
+
+Clear segmentation boundaries in PE regions
+
+Example output (insert your generated segmentation examples):
+
+results/
+ ├── sample_output_1.png
+ ├── sample_output_2.png
+ └── training_curve.png
+
+🧪 Evaluation
+
+Evaluate on test set:
+
+python evaluate.py
+
+
+Outputs:
+
+Test Dice Score
+
+Predicted vs. Ground Truth masks
+
+Visual results stored in /results/
+
+📘 Repository Structure
+📁 Pulmonary-Embolism-Segmentation-using-TransUNet-on-FUMPE-Dataset
+│
+├── train.py
+├── model.py
+├── utils.py
+├── evaluate.py
+├── requirements.txt
+├── README.md
+└── results/
